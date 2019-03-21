@@ -9,17 +9,17 @@ import android.view.ViewGroup
 
 import com.ruuvi.station.R
 import com.ruuvi.station.util.BackgroundScanModes
-import com.ruuvi.station.util.Preferences
+import com.ruuvi.station.util.RuuviPreferences
 import com.ruuvi.station.util.ServiceUtils
 import kotlinx.android.synthetic.main.fragment_app_settings_list.*
 
 class AppSettingsListFragment : Fragment() {
-    lateinit var prefs: Preferences
+    lateinit var prefs: RuuviPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        prefs = Preferences(context!!)
+        prefs = RuuviPreferences(context!!)
 
         //(activity as AppSettingsActivity).setScanSwitchLayout(view)
         scan_layout.setOnClickListener {
@@ -42,7 +42,7 @@ class AppSettingsListFragment : Fragment() {
 
         val switch = view.findViewById<SwitchCompat>(R.id.dashboard_switch)
         switch.isChecked = prefs.dashboardEnabled
-        switch.setOnCheckedChangeListener{ _, isChecked ->
+        switch.setOnCheckedChangeListener { _, isChecked ->
             prefs.dashboardEnabled = isChecked
         }
 
@@ -81,7 +81,7 @@ class AppSettingsListFragment : Fragment() {
         if (prefs.temperatureUnit == "C") {
             temperature_unit_sub.text = getString(R.string.celsius)
         } else {
-            temperature_unit_sub.text = getString(R.string.fahrenheit )
+            temperature_unit_sub.text = getString(R.string.fahrenheit)
         }
     }
 

@@ -18,11 +18,11 @@ import com.ruuvi.station.model.TagSensorReading
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GraphView (val context: Context) {
+class GraphView(val context: Context) {
     private var from: Long = 0
     private var to: Long = 0
 
-    fun drawChart( tagId: String, view: View) {
+    fun drawChart(tagId: String, view: View) {
         val readings = TagSensorReading.getForTag(tagId)
 
         val tempData: MutableList<Entry> = ArrayList()
@@ -76,7 +76,8 @@ class GraphView (val context: Context) {
         chart.setNoDataTextColor(Color.WHITE)
         try {
             chart.description.typeface = ResourcesCompat.getFont(context, R.font.montserrat)
-        } catch (e: Exception) { /* ¯\_(ツ)_/¯ */ }
+        } catch (e: Exception) { /* ¯\_(ツ)_/¯ */
+        }
         chart.legend.isEnabled = false
         chart.data = LineData(set)
         chart.data.isHighlightEnabled = false

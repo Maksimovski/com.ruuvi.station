@@ -20,9 +20,6 @@ import com.ruuvi.station.model.RuuviTag;
 import com.ruuvi.station.util.DataUpdateListener;
 import com.ruuvi.station.util.DeviceIdentifier;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class DashboardFragment extends Fragment implements DataUpdateListener {
@@ -73,9 +70,8 @@ public class DashboardFragment extends Fragment implements DataUpdateListener {
                 tags.addAll(RuuviTag.getAll(true));
                 if (tags.size() > 0) {
                     noTagsFound.setVisibility(View.GONE);
-                }
-                else noTagsFound.setVisibility(View.VISIBLE);
-                if (adapter != null)  adapter.notifyDataSetChanged();
+                } else noTagsFound.setVisibility(View.VISIBLE);
+                if (adapter != null) adapter.notifyDataSetChanged();
                 handler.postDelayed(this, 1000);
             }
         });
@@ -86,7 +82,7 @@ public class DashboardFragment extends Fragment implements DataUpdateListener {
     private AdapterView.OnItemClickListener tagClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final RuuviTag tag = (RuuviTag)view.getTag();
+            final RuuviTag tag = (RuuviTag) view.getTag();
             Intent intent = new Intent(getActivity(), TagDetails.class);
             intent.putExtra("id", tag.id);
             startActivity(intent);
@@ -100,7 +96,7 @@ public class DashboardFragment extends Fragment implements DataUpdateListener {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ((MainActivity)getActivity()).myRuuviTags.remove(tag);
+                ((MainActivity) getActivity()).myRuuviTags.remove(tag);
                 tag.deleteTagAndRelatives();
             }
         });

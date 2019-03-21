@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.ruuvi.station.service.AltBeaconScannerForegroundService;
@@ -12,7 +11,7 @@ import com.ruuvi.station.service.RuuviRangeNotifier;
 import com.ruuvi.station.util.BackgroundScanModes;
 import com.ruuvi.station.util.Constants;
 import com.ruuvi.station.util.Foreground;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
 import com.ruuvi.station.util.ServiceUtils;
 import com.ruuvi.station.util.Utils;
 
@@ -31,7 +30,7 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
     private BeaconManager beaconManager;
     private Region region;
     boolean running = false;
-    private Preferences prefs;
+    private RuuviPreferences prefs;
     private RuuviRangeNotifier ruuviRangeNotifier;
     private boolean foreground = false;
     BluetoothMedic medic;
@@ -91,7 +90,7 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
             return;
         }
         bindBeaconManager(me, getApplicationContext());
-        int scanInterval = new Preferences(getApplicationContext()).getBackgroundScanInterval() * 1000;
+        int scanInterval = new RuuviPreferences(getApplicationContext()).getBackgroundScanInterval() * 1000;
         int minInterval = 15 * 60 * 1000;
         if (scanInterval < minInterval) scanInterval = minInterval;
         if (scanInterval != beaconManager.getBackgroundBetweenScanPeriod()) {
@@ -139,7 +138,7 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
         me = this;
         Log.d(TAG, "App class onCreate");
         FlowManager.init(getApplicationContext());
-        prefs = new Preferences(getApplicationContext());
+        prefs = new RuuviPreferences(getApplicationContext());
         ruuviRangeNotifier = new RuuviRangeNotifier(getApplicationContext(), "RuuviScannerApplication");
         Foreground.init(this);
         Foreground.get().addListener(listener);

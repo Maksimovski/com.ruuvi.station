@@ -26,8 +26,7 @@
             android:text="01:01:01:01:01:01"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/mainDark"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,8 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 app:srcCompat="@drawable/ic_notifications_off_24px"
-                android:layout_alignParentRight="true"
-                />
+                android:layout_alignParentRight="true" />
 
         </RelativeLayout>
 
@@ -51,8 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginLeft="12dp"
-        />
+        android:layout_marginLeft="12dp" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -191,8 +188,7 @@
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/row_main_grid"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </RelativeLayout>

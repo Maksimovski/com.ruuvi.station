@@ -2,9 +2,6 @@ package com.ruuvi.station.model;
 
 import android.content.Context;
 
-import java.util.Date;
-import java.util.List;
-
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -13,8 +10,11 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.ruuvi.station.R;
 import com.ruuvi.station.database.LocalDatabase;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
 import com.ruuvi.station.util.Utils;
+
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -87,7 +87,7 @@ public class RuuviTag extends BaseModel {
     }
 
     public static String getTemperatureUnit(Context context) {
-        return new Preferences(context).getTemperatureUnit();
+        return new RuuviPreferences(context).getTemperatureUnit();
     }
 
     public String getTemperatureString(Context context) {

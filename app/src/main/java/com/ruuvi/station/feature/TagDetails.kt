@@ -19,24 +19,23 @@ import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AppCompatActivity
-import com.ruuvi.station.R
-import com.ruuvi.station.model.RuuviTag
-
-import kotlinx.android.synthetic.main.activity_tag_details.*
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.view.*
 import android.support.v4.view.ViewPager.OnPageChangeListener
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatImageView
-import android.widget.*
-import kotlinx.android.synthetic.main.content_tag_details.*
 import android.text.SpannableString
 import android.text.style.SuperscriptSpan
 import android.util.Log
+import android.view.*
+import android.widget.*
+import com.ruuvi.station.R
+import com.ruuvi.station.model.RuuviTag
 import com.ruuvi.station.util.*
+import kotlinx.android.synthetic.main.activity_tag_details.*
+import kotlinx.android.synthetic.main.content_tag_details.*
 import java.util.*
 
 
@@ -44,6 +43,7 @@ class TagDetails : AppCompatActivity() {
     private val TAG = "TagDetails"
     private val REQUEST_ENABLE_BT = 1337
     private val BACKGROUND_FADE_DURATION = 200
+
     companion object {
         val FROM_WELCOME = "FROM_WELCOME"
     }
@@ -72,7 +72,7 @@ class TagDetails : AppCompatActivity() {
 
         starter = Starter(this)
 
-        if (Preferences(this).dashboardEnabled) {
+        if (RuuviPreferences(this).dashboardEnabled) {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             main_drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         } else {
@@ -114,8 +114,8 @@ class TagDetails : AppCompatActivity() {
                 val im = AppCompatImageView(applicationContext)
                 im.scaleType = ImageView.ScaleType.CENTER_CROP
                 im.layoutParams = FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT)
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT)
                 return im
             }
         })
@@ -139,7 +139,7 @@ class TagDetails : AppCompatActivity() {
         }
 
         try {
-            for (i in 0..(pager_title_strip.childCount-1)) {
+            for (i in 0..(pager_title_strip.childCount - 1)) {
                 val child = pager_title_strip.getChildAt(i)
                 if (child is TextView) {
                     child.typeface = ResourcesCompat.getFont(applicationContext, R.font.montserrat_bold)
@@ -243,7 +243,7 @@ class TagDetails : AppCompatActivity() {
             updateUI()
             invalidateOptionsMenu()
 
-            val prefs = Preferences(this)
+            val prefs = RuuviPreferences(this)
             val bgScanEnabled = prefs.backgroundScanMode
             if (bgScanEnabled == BackgroundScanModes.DISABLED) {
                 if (prefs.isFirstGraphVisit) {
@@ -307,7 +307,7 @@ class TagDetails : AppCompatActivity() {
 
         if (starter.getNeededPermissions().isEmpty()) {
             refrshTagLists()
-            handler.post(object: Runnable {
+            handler.post(object : Runnable {
                 override fun run() {
                     updateUI()
                     handler.postDelayed(this, 1000)

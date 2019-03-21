@@ -33,9 +33,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ruuvi.station.R;
 import com.ruuvi.station.RuuviScannerApplication;
 import com.ruuvi.station.feature.AboutActivity;
@@ -44,15 +41,15 @@ import com.ruuvi.station.feature.AppSettingsActivity;
 import com.ruuvi.station.feature.WelcomeActivity;
 import com.ruuvi.station.model.RuuviTag;
 import com.ruuvi.station.scanning.BackgroundScanner;
-import com.ruuvi.station.service.AltBeaconScannerForegroundService;
-import com.ruuvi.station.service.AltBeaconScannerService;
-import com.ruuvi.station.service.ScannerService;
-import com.ruuvi.station.util.DataUpdateListener;
 import com.ruuvi.station.scanning.RuuviTagListener;
 import com.ruuvi.station.scanning.RuuviTagScanner;
-import com.ruuvi.station.util.Preferences;
-import com.ruuvi.station.util.ServiceUtils;
+import com.ruuvi.station.service.ScannerService;
+import com.ruuvi.station.util.DataUpdateListener;
+import com.ruuvi.station.util.RuuviPreferences;
 import com.ruuvi.station.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RuuviTagListener {
     private static final String TAG = "MainActivity";
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
     private DataUpdateListener fragmentWithCallback;
     private Handler handler;
     boolean dashboardVisible = true;
-    Preferences prefs;
+    RuuviPreferences prefs;
 
     private Runnable updater = new Runnable() {
         @Override
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
         toolbar.setLogo(R.drawable.logo);
 
         handler = new Handler();
-        prefs = new Preferences(this);
+        prefs = new RuuviPreferences(this);
         myRuuviTags = RuuviTag.getAll(true);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
@@ -139,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
 
     public static void setBackgroundScanning(final Context context) {
         Log.d(TAG, "DEBUG, setBackgroundScan");
-        ((RuuviScannerApplication)(((Activity)context).getApplication())).startForegroundScanning();
+        ((RuuviScannerApplication) (((Activity) context).getApplication())).startForegroundScanning();
         /*
         Log.d(TAG, "DEBUG, stopped bg scan");
         ServiceUtils su = new ServiceUtils(context);
@@ -266,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case COARSE_LOCATION_PERMISSION : {
+            case COARSE_LOCATION_PERMISSION: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // party
@@ -303,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
 
         final List<String> listPermissionsNeeded = new ArrayList<>();
 
-        if(permissionCoarseLocation != PackageManager.PERMISSION_GRANTED) {
+        if (permissionCoarseLocation != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
         }
 
@@ -313,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
     private boolean showPermissionDialog(AppCompatActivity activity) {
         List<String> listPermissionsNeeded = getNeededPermissions();
 
-        if(!listPermissionsNeeded.isEmpty()) {
+        if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(activity, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), COARSE_LOCATION_PERMISSION);
         }
 
@@ -323,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
     @Override
     protected void onResume() {
         super.onResume();
-        if(getNeededPermissions().size() > 0) {
+        if (getNeededPermissions().size() > 0) {
 
         } else {
             refrshTagLists();
@@ -347,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
         super.onPause();
         if (scanner != null) scanner.stop();
         handler.removeCallbacks(updater);
-        for (RuuviTag tag: myRuuviTags) {
+        for (RuuviTag tag : myRuuviTags) {
             tag.update();
         }
     }
@@ -374,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
             case 1:
                 refrshTagLists();
                 fragment = new DashboardFragment();
-                fragmentWithCallback = (DataUpdateListener)fragment;
+                fragmentWithCallback = (DataUpdateListener) fragment;
                 dashboardVisible = true;
                 break;
             case 2:
@@ -449,7 +446,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
         int locationMode;
         String locationProviders;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
                 locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
             } catch (Settings.SettingNotFoundException e) {
@@ -466,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements RuuviTagListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_ENABLE_BT) {
                 scanner = new RuuviTagScanner(MainActivity.this, getApplicationContext());
             }

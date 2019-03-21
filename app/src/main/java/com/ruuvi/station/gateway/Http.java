@@ -13,14 +13,14 @@ import com.ruuvi.station.model.RuuviTag;
 import com.ruuvi.station.model.ScanEvent;
 import com.ruuvi.station.model.ScanEventSingle;
 import com.ruuvi.station.model.ScanLocation;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
 
 import java.util.List;
 
 public class Http {
     private static final String TAG = "Http";
 
-    public static void post(List<RuuviTag> tags, Location location, Context context){
+    public static void post(List<RuuviTag> tags, Location location, Context context) {
         ScanLocation scanLocation = null;
         if (location != null) {
             scanLocation = new ScanLocation();
@@ -63,11 +63,10 @@ public class Http {
             }
         }
 
-        Preferences prefs = new Preferences(context);
+        RuuviPreferences prefs = new RuuviPreferences(context);
         String backendUrl = prefs.getGatewayUrl();
 
-        if (!backendUrl.isEmpty() && eventBatch.tags.size() > 0)
-        {
+        if (!backendUrl.isEmpty() && eventBatch.tags.size() > 0) {
             Ion.with(context)
                     .load(backendUrl)
                     .setJsonPojoBody(eventBatch)

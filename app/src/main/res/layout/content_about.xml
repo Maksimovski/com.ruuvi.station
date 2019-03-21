@@ -15,8 +15,7 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="32dp"
-            >
+            android:paddingBottom="32dp">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ruuvi_image"
@@ -213,8 +212,7 @@
                 android:paddingRight="40dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textAlignment="textStart"
-                />
+                android:textAlignment="textStart" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

@@ -32,14 +32,6 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.ruuvi.station.R;
 import com.ruuvi.station.feature.StartupActivity;
@@ -52,7 +44,14 @@ import com.ruuvi.station.util.AlarmChecker;
 import com.ruuvi.station.util.BackgroundScanModes;
 import com.ruuvi.station.util.Constants;
 import com.ruuvi.station.util.Foreground;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ScannerService extends Service {
@@ -113,8 +112,8 @@ public class ScannerService extends Service {
     }
 
     private boolean getForegroundMode() {
-        Preferences prefs = new Preferences(this);
-        int getInterval =  prefs.getBackgroundScanInterval();
+        RuuviPreferences prefs = new RuuviPreferences(this);
+        int getInterval = prefs.getBackgroundScanInterval();
         return prefs.getBackgroundScanMode() == BackgroundScanModes.DISABLED && getInterval < 15 * 60;
         //return settings.getBoolean("pref_bgscan", false);
     }
@@ -148,7 +147,7 @@ public class ScannerService extends Service {
             stopScan();
             Http.post(backgroundTags, tagLocation, getApplicationContext());
 
-            for (RuuviTag tag: backgroundTags) {
+            for (RuuviTag tag : backgroundTags) {
                 TagSensorReading reading = new TagSensorReading(tag);
                 reading.save();
                 AlarmChecker.check(tag, getApplicationContext());
@@ -189,7 +188,7 @@ public class ScannerService extends Service {
                 .setContentText(this.getString(R.string.scanner_notification_message))
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(true)
-                        .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setLargeIcon(bitmap)
                 .setContentIntent(pendingIntent);
 
@@ -275,7 +274,7 @@ public class ScannerService extends Service {
                 stopSelf();
                 isForegroundMode = false;
             } else {
-                Preferences prefs = new Preferences(getApplicationContext());
+                RuuviPreferences prefs = new RuuviPreferences(getApplicationContext());
                 if (prefs.getServiceWakelock()) {
                     PowerManager powerManager = (PowerManager) getApplicationContext().getSystemService(POWER_SERVICE);
                     try {
@@ -323,8 +322,7 @@ public class ScannerService extends Service {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, -LOG_INTERVAL);
         long loggingThreshold = calendar.getTime().getTime();
-        for (Map.Entry<String, Long> entry : lastLogged.entrySet())
-        {
+        for (Map.Entry<String, Long> entry : lastLogged.entrySet()) {
             if (entry.getKey().equals(ruuviTag.id) && entry.getValue() > loggingThreshold) {
                 return;
             }

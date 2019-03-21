@@ -26,7 +26,7 @@ public class Event {
         this.eventId = UUID.randomUUID().toString();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             try {
-                BatteryManager bm = (BatteryManager)context.getSystemService(BATTERY_SERVICE);
+                BatteryManager bm = (BatteryManager) context.getSystemService(BATTERY_SERVICE);
                 this.batteryLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
             } catch (Exception e) {
                 Log.e("TEST", e.getMessage());

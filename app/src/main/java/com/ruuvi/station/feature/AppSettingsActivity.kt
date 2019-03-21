@@ -1,21 +1,16 @@
 package com.ruuvi.station.feature
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import com.ruuvi.station.R
-import android.support.v7.widget.SwitchCompat
-import com.ruuvi.station.util.Preferences
-
+import com.ruuvi.station.util.RuuviPreferences
 import kotlinx.android.synthetic.main.activity_app_settings.*
-import kotlinx.android.synthetic.main.fragment_app_settings_detail.*
 
 class AppSettingsActivity : AppCompatActivity() {
     var showingFragmentTitle = -1
-    lateinit var pref: Preferences
+    lateinit var pref: RuuviPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +18,7 @@ class AppSettingsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        pref = Preferences(this.applicationContext)
+        pref = RuuviPreferences(this.applicationContext)
 
         openFragment(-1)
     }

@@ -45,7 +45,8 @@
             android:name=".service.AltBeaconScannerForegroundService"
             android:exported="false" />
 
-        <service android:name=".service.ScannerJobService"
+        <service
+            android:name=".service.ScannerJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver android:name=".scanning.BackgroundScanner" />
@@ -53,7 +54,7 @@
         <activity
             android:name=".feature.TagDetails"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar"/>
+            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
             android:name=".feature.WelcomeActivity"
             android:screenOrientation="portrait"
@@ -89,7 +90,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.DashboardActivity"
+        <activity
+            android:name=".feature.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
 
         <provider
@@ -102,9 +104,12 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service android:name="org.altbeacon.beacon.service.BeaconService"
+        <service
+            android:name="org.altbeacon.beacon.service.BeaconService"
             tools:node="replace">
-            <meta-data android:name="longScanForcingEnabled" android:value="true"/>
+            <meta-data
+                android:name="longScanForcingEnabled"
+                android:value="true" />
         </service>
 
 

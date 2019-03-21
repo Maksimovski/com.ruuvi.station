@@ -1,6 +1,5 @@
 package com.ruuvi.station.service;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,16 +14,13 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ruuvi.station.R;
 import com.ruuvi.station.RuuviScannerApplication;
 import com.ruuvi.station.feature.StartupActivity;
-import com.ruuvi.station.util.BackgroundScanModes;
 import com.ruuvi.station.util.Constants;
 import com.ruuvi.station.util.Foreground;
-import com.ruuvi.station.util.Preferences;
-import com.ruuvi.station.util.ServiceUtils;
+import com.ruuvi.station.util.RuuviPreferences;
 import com.ruuvi.station.util.Utils;
 
 import org.altbeacon.beacon.BeaconConsumer;
@@ -97,7 +93,7 @@ public class AltBeaconScannerForegroundService extends Service implements Beacon
 
         String notificationText = getString(R.string.scanner_notification_title);
         notificationText = notificationText.replace("..", " every ");
-        int scanInterval = new Preferences(getApplicationContext()).getBackgroundScanInterval();
+        int scanInterval = new RuuviPreferences(getApplicationContext()).getBackgroundScanInterval();
         int min = scanInterval / 60;
         int sec = scanInterval - min * 60;
         if (min > 0) {
@@ -113,8 +109,7 @@ public class AltBeaconScannerForegroundService extends Service implements Beacon
                 seconds = seconds.substring(0, seconds.length() - 1);
             }
             notificationText += sec + " " + seconds;
-        }
-        else {
+        } else {
             notificationText = notificationText.replace(", ", "");
         }
 
@@ -154,7 +149,7 @@ public class AltBeaconScannerForegroundService extends Service implements Beacon
     }
 
     private void setBackground() {
-        int scanInterval = new Preferences(getApplicationContext()).getBackgroundScanInterval() * 1000;
+        int scanInterval = new RuuviPreferences(getApplicationContext()).getBackgroundScanInterval() * 1000;
         if (scanInterval != beaconManager.getBackgroundBetweenScanPeriod()) {
             updateNotification();
             beaconManager.setBackgroundBetweenScanPeriod(scanInterval);
@@ -174,7 +169,7 @@ public class AltBeaconScannerForegroundService extends Service implements Beacon
         }
 
         public void onBecameBackground() {
-           setBackground();
+            setBackground();
         }
     };
 
@@ -196,7 +191,7 @@ public class AltBeaconScannerForegroundService extends Service implements Beacon
         ruuviRangeNotifier = null;
         stopForeground(true);
         if (listener != null) Foreground.get().removeListener(listener);
-        ((RuuviScannerApplication)getApplication()).startBackgroundScanning();
+        ((RuuviScannerApplication) getApplication()).startBackgroundScanning();
     }
 
     @Nullable

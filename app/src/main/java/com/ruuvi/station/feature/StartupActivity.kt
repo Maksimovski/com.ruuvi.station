@@ -2,13 +2,12 @@ package com.ruuvi.station.feature
 
 import android.content.Intent
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.ruuvi.station.R
 import com.ruuvi.station.RuuviScannerApplication
-import com.ruuvi.station.feature.main.MainActivity
 import com.ruuvi.station.util.DeviceIdentifier
-import com.ruuvi.station.util.Preferences
+import com.ruuvi.station.util.RuuviPreferences
 
 
 class StartupActivity : AppCompatActivity() {
@@ -17,15 +16,14 @@ class StartupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_startup)
         DeviceIdentifier.id(applicationContext)
-        val prefs = Preferences(this)
+        val prefs = RuuviPreferences(this)
 
         (this.applicationContext as RuuviScannerApplication).startForegroundScanning()
 
         if (prefs.isFirstStart) {
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
-        }
-        else if (prefs.dashboardEnabled) {
+        } else if (prefs.dashboardEnabled) {
             val intent = Intent(applicationContext, DashboardActivity::class.java)
             startActivity(intent)
         } else {
@@ -37,12 +35,14 @@ class StartupActivity : AppCompatActivity() {
         }
 
         val app = this
-        class StartScannerTask:
-            AsyncTask<Void, Void, String>() {
+
+        class StartScannerTask :
+                AsyncTask<Void, Void, String>() {
             override fun doInBackground(vararg voids: Void): String {
                 //MainActivity.setBackgroundScanning(app)
                 return "Ok"
             }
+
             override fun onPostExecute(result: String) {
             }
         }

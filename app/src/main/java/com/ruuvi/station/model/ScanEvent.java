@@ -3,9 +3,6 @@ package com.ruuvi.station.model;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
 
 /**
  * Created by ISOHAJA on 14.7.2017.

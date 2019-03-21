@@ -23,7 +23,6 @@ import com.ruuvi.station.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class AddTagFragment extends Fragment implements DataUpdateListener {
@@ -44,7 +43,7 @@ public class AddTagFragment extends Fragment implements DataUpdateListener {
     }
 
     public static boolean isBackgroundInUse(List<RuuviTag> tags, int background) {
-        for (RuuviTag tag: tags) {
+        for (RuuviTag tag : tags) {
             if (tag.defaultBackground == background) return true;
         }
         return false;
@@ -52,12 +51,12 @@ public class AddTagFragment extends Fragment implements DataUpdateListener {
 
     public static int getKindaRandomBackground() {
         List<RuuviTag> tags = RuuviTag.getAll(true);
-        int bg = (int)(Math.random() * 9.0);
+        int bg = (int) (Math.random() * 9.0);
         for (int i = 0; i < 100; i++) {
             if (!isBackgroundInUse(tags, bg)) {
                 return bg;
             }
-            bg = (int)(Math.random() * 9.0);
+            bg = (int) (Math.random() * 9.0);
         }
         return bg;
     }
@@ -77,7 +76,7 @@ public class AddTagFragment extends Fragment implements DataUpdateListener {
         beaconListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                RuuviTag tag = (RuuviTag)beaconListView.getItemAtPosition(i);
+                RuuviTag tag = (RuuviTag) beaconListView.getItemAtPosition(i);
                 if (RuuviTag.get(tag.id).favorite) {
                     Toast.makeText(getActivity(), getActivity().getString(R.string.tag_already_added), Toast.LENGTH_SHORT)
                             .show();
@@ -111,9 +110,8 @@ public class AddTagFragment extends Fragment implements DataUpdateListener {
                 if (tags.size() > 0) {
                     Utils.sortTagsByRssi(tags);
                     noTagsTextView.setVisibility(View.INVISIBLE);
-                }
-                else noTagsTextView.setVisibility(View.VISIBLE);
-                if (adapter != null)  adapter.notifyDataSetChanged();
+                } else noTagsTextView.setVisibility(View.VISIBLE);
+                if (adapter != null) adapter.notifyDataSetChanged();
                 handler.postDelayed(this, 1000);
             }
         });
@@ -133,6 +131,6 @@ public class AddTagFragment extends Fragment implements DataUpdateListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ((MainActivity)getActivity()).openFragment(1);
+        ((MainActivity) getActivity()).openFragment(1);
     }
 }

@@ -1,10 +1,10 @@
 package com.ruuvi.station.receivers
 
-import android.content.Intent
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import com.ruuvi.station.model.Alarm
-import android.app.NotificationManager
 
 
 class CancelAlarmReceiver : BroadcastReceiver() {

@@ -6,13 +6,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ruuvi.station.RuuviScannerApplication;
 import com.ruuvi.station.util.BackgroundScanModes;
 import com.ruuvi.station.util.Constants;
 import com.ruuvi.station.util.Foreground;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
 import com.ruuvi.station.util.ServiceUtils;
 
 import org.altbeacon.beacon.BeaconConsumer;
@@ -65,11 +64,11 @@ public class AltBeaconScannerService extends Service implements BeaconConsumer {
             beaconManager.unbind(this);
             beaconManager = null;
         }
-        Preferences prefs = new Preferences(this);
+        RuuviPreferences prefs = new RuuviPreferences(this);
         if (prefs.getBackgroundScanMode() == BackgroundScanModes.FOREGROUND) {
             new ServiceUtils(this).startForegroundService();
         } else if (prefs.getBackgroundScanMode() == BackgroundScanModes.BACKGROUND) {
-            ((RuuviScannerApplication)(this.getApplication())).startBackgroundScanning();
+            ((RuuviScannerApplication) (this.getApplication())).startBackgroundScanning();
         }
         if (listener != null) Foreground.get().removeListener(listener);
     }
@@ -91,7 +90,8 @@ public class AltBeaconScannerService extends Service implements BeaconConsumer {
 
     @Override
     public void onBeaconServiceConnect() {
-        if (ruuviRangeNotifier == null) ruuviRangeNotifier = new RuuviRangeNotifier(this, "AltBeaconScannerService");
+        if (ruuviRangeNotifier == null)
+            ruuviRangeNotifier = new RuuviRangeNotifier(this, "AltBeaconScannerService");
         beaconManager.removeAllRangeNotifiers();
         beaconManager.addRangeNotifier(ruuviRangeNotifier);
         try {

@@ -77,7 +77,7 @@ public class AlarmChecker {
                 return 1;
             }
         }
-        for (Alarm alarm: alarms) {
+        for (Alarm alarm : alarms) {
             if (alarm.enabled) return 0;
         }
         return -1;

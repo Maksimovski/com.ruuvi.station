@@ -1,17 +1,14 @@
 package com.ruuvi.station.feature
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
-import android.widget.Toast
 import com.ruuvi.station.BuildConfig
 import com.ruuvi.station.R
 import com.ruuvi.station.database.LocalDatabase
 import com.ruuvi.station.model.RuuviTag
 import com.ruuvi.station.model.TagSensorReading
-
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.content_about.*
 import java.io.File
@@ -40,7 +37,7 @@ class AboutActivity : AppCompatActivity() {
         val addedTags = RuuviTag.getAll(true).size
         debugText += getString(R.string.seen_tags, addedTags + RuuviTag.getAll(false).size) + "\n"
         debugText += getString(R.string.added_tags, addedTags) + "\n"
-        debugText += getString(R.string.db_data_points, readingCount*9) + "\n"
+        debugText += getString(R.string.db_data_points, readingCount * 9) + "\n"
 
         val dbPath = application.filesDir.path + "/../databases/" + LocalDatabase.NAME + ".db"
         val dbFile = File(dbPath)

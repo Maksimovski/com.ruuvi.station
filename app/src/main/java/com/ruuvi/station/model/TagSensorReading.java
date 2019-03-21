@@ -1,7 +1,5 @@
 package com.ruuvi.station.model;
 
-import android.util.Log;
-
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;

@@ -5,36 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/navigation_header_view"
+    <RelativeLayout
+        android:id="@+id/navigation_header_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/gradient_background"
-                android:scrollY="150dp"
-                android:scaleType="matrix"
-                />
+            android:layout_height="match_parent"
+            android:src="@drawable/gradient_background"
+            android:scrollY="150dp"
+            android:scaleType="matrix" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                app:srcCompat="@drawable/logo"
-                android:layout_margin="16dp"
-
-                />
-
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/navigationDrawer_listView"
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_below="@id/navigation_header_view">
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/logo"
+            android:layout_margin="16dp"
 
-        </ListView>
+            />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/navigationDrawer_listView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/navigation_header_view">
+
+    </ListView>
 
 </RelativeLayout>

@@ -8,16 +8,13 @@ import java.util.UUID;
  * Created by ISOHAJA on 14.7.2017.
  */
 
-public class DeviceIdentifier
-{
+public class DeviceIdentifier {
     private static String uniqueID = null;
 
-    public static String id(Context context)
-    {
-        Preferences prefs = new Preferences(context);
+    public static String id(Context context) {
+        RuuviPreferences prefs = new RuuviPreferences(context);
         uniqueID = prefs.getDeviceId();
-        if (uniqueID.isEmpty())
-        {
+        if (uniqueID.isEmpty()) {
             uniqueID = UUID.randomUUID().toString();
             prefs.setDeviceId(uniqueID);
         }

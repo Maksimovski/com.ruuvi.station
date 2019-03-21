@@ -69,7 +69,8 @@ public class RuuviRangeNotifier implements RangeNotifier {
         if (gatewayOn) updateLocation();
         List<RuuviTag> tags = new ArrayList<>();
         Log.d(TAG, from + " " + " found " + beacons.size());
-        foundBeacon: for (Beacon beacon : beacons) {
+        foundBeacon:
+        for (Beacon beacon : beacons) {
             // the same tag can appear multiple times
             for (RuuviTag tag : tags) {
                 if (tag.id.equals(beacon.getBluetoothAddress())) continue foundBeacon;
@@ -102,8 +103,7 @@ public class RuuviRangeNotifier implements RangeNotifier {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, -Constants.DATA_LOG_INTERVAL);
         long loggingThreshold = calendar.getTime().getTime();
-        for (Map.Entry<String, Long> entry : lastLogged.entrySet())
-        {
+        for (Map.Entry<String, Long> entry : lastLogged.entrySet()) {
             if (entry.getKey().equals(ruuviTag.id) && entry.getValue() > loggingThreshold) {
                 return;
             }

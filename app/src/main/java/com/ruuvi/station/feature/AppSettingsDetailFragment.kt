@@ -1,9 +1,8 @@
 package com.ruuvi.station.feature
 
-import android.os.Bundle
 import android.graphics.Color
+import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.SwitchCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
@@ -12,27 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import com.koushikdutta.ion.Ion
-
 import com.ruuvi.station.R
 import com.ruuvi.station.feature.main.MainActivity
 import com.ruuvi.station.model.ScanEvent
 import com.ruuvi.station.util.BackgroundScanModes
 import com.ruuvi.station.util.DeviceIdentifier
-import com.ruuvi.station.util.Preferences
-import com.ruuvi.station.util.ServiceUtils
+import com.ruuvi.station.util.RuuviPreferences
 import kotlinx.android.synthetic.main.fragment_app_settings_detail.*
 
 private const val ARG_SETTING_RES = "arg_setting_res"
 
 class AppSettingsDetailFragment : Fragment() {
     private var res: Int? = null
-    lateinit var prefs: Preferences
+    lateinit var prefs: RuuviPreferences
     private var gatewayUrl = ""
     private var deviceId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefs = Preferences(this.context!!)
+        prefs = RuuviPreferences(this.context!!)
         arguments?.let {
             res = it.getInt(ARG_SETTING_RES)
         }
@@ -155,6 +152,7 @@ class AppSettingsDetailFragment : Fragment() {
             input_setting.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
+
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
 
@@ -169,6 +167,7 @@ class AppSettingsDetailFragment : Fragment() {
             device_identifier_input.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
+
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
 
@@ -216,6 +215,7 @@ class AppSettingsDetailFragment : Fragment() {
             input_setting.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
+
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     deviceId = p0.toString()
                     if (p0.toString().isEmpty()) {

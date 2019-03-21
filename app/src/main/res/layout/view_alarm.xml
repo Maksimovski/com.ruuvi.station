@@ -33,8 +33,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/checkBoxStyle"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/alerts_header"
-        />
+        app:layout_constraintTop_toBottomOf="@id/alerts_header" />
 
     <TextView
         android:id="@+id/alert_min_value"
@@ -57,8 +56,7 @@
         android:layout_marginRight="32dp"
         app:bar_color="@color/ap_gray"
         app:bar_highlight_color="@color/main"
-        app:data_type="_integer"
-        />
+        app:data_type="_integer" />
 
     <TextView
         android:id="@+id/alert_max_value"

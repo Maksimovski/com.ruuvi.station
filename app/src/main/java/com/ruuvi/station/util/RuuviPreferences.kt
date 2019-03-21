@@ -5,14 +5,14 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 
-class Preferences(val context: Context) {
-   var pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+class RuuviPreferences(val context: Context) {
+    var pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-   var backgroundScanInterval: Int
-       get() = pref.getInt("pref_background_scan_interval", Constants.DEFAULT_SCAN_INTERVAL)
-       set(interval) {
-           pref.edit().putInt("pref_background_scan_interval", interval).apply()
-       }
+    var backgroundScanInterval: Int
+        get() = pref.getInt("pref_background_scan_interval", Constants.DEFAULT_SCAN_INTERVAL)
+        set(interval) {
+            pref.edit().putInt("pref_background_scan_interval", interval).apply()
+        }
 
     var backgroundScanMode: BackgroundScanModes
         get() = BackgroundScanModes.fromInt(pref.getInt("pref_background_scan_mode", BackgroundScanModes.DISABLED.value))!!

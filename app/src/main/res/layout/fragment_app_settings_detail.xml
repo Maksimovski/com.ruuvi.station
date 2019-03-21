@@ -254,38 +254,44 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <android.support.v7.widget.AppCompatTextView
                             android:text="@string/minutes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
                         <NumberPicker
                             android:text="@string/seconds"
                             android:id="@+id/duration_minute"
                             android:tooltipText="Minutes"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <android.support.v7.widget.AppCompatTextView
                             android:text="@string/seconds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
                         <NumberPicker
                             android:id="@+id/duration_second"
                             android:tooltipText="Seconds"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
 

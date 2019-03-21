@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import com.ruuvi.station.R
 import com.ruuvi.station.feature.main.MainActivity
 import com.ruuvi.station.feature.main.MainActivity.isBluetoothEnabled
-import java.util.ArrayList
+import java.util.*
 
 class Starter(val that: AppCompatActivity) {
     fun startScanning(): Boolean {

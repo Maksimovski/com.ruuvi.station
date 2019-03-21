@@ -26,7 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.ruuvi.station.gateway.Http;
 import com.ruuvi.station.model.LeScanResult;
 import com.ruuvi.station.model.RuuviTag;
-import com.ruuvi.station.util.Preferences;
+import com.ruuvi.station.util.RuuviPreferences;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -138,7 +138,7 @@ public class BackgroundScanner extends BroadcastReceiver {
         while (itr.hasNext()) {
             LeScanResult element = itr.next();
 
-            RuuviTag tag  = element.parse();
+            RuuviTag tag = element.parse();
             if (tag != null) addFoundTagToLists(tag, tags, context);
         }
 
@@ -151,7 +151,7 @@ public class BackgroundScanner extends BroadcastReceiver {
     }
 
     private void scheduleNextScan(Context context) {
-        Preferences prefs = new Preferences(context);
+        RuuviPreferences prefs = new RuuviPreferences(context);
         //int scanInterval = Integer.parseInt(settings.getString("pref_scaninterval", "30")) * 1000;
         int scanInterval = prefs.getBackgroundScanInterval() * 1000;
         if (scanInterval < 15 * 1000) scanInterval = 15 * 1000;
@@ -164,8 +164,7 @@ public class BackgroundScanner extends BroadcastReceiver {
         if (!batterySaving) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 am.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + scanInterval, sender);
-            }
-            else {
+            } else {
                 am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + scanInterval, sender);
             }
         }

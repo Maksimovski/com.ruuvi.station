@@ -1,13 +1,13 @@
 package com.ruuvi.station.feature
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import com.ruuvi.station.R
-import com.ruuvi.station.util.Preferences
+import com.ruuvi.station.util.RuuviPreferences
 import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class WelcomeActivity : AppCompatActivity() {
         tab_layout.setupWithViewPager(welcome_pager)
 
         start_button.setOnClickListener {
-            Preferences(this).isFirstStart = false
+            RuuviPreferences(this).isFirstStart = false
             val intent = Intent(this, StartupActivity::class.java)
             intent.putExtra(TagDetails.FROM_WELCOME, true)
             startActivity(intent)
@@ -32,7 +32,7 @@ class WelcomeActivity : AppCompatActivity() {
 }
 
 
-class WelcomePager: PagerAdapter() {
+class WelcomePager : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         var resId = 0
         when (position) {

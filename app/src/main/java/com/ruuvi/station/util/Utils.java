@@ -4,21 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.media.ExifInterface;
 import android.util.Log;
 
 import com.ruuvi.station.R;
 import com.ruuvi.station.model.RuuviTag;
 
 import java.io.File;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
@@ -45,7 +42,7 @@ public class Utils {
 
     public static Bitmap createBall(int radius, int ballColor, int letterColor, String letter) {
         letter = letter.toUpperCase();
-        Bitmap bitmap = Bitmap.createBitmap(radius*2, radius*2, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(radius * 2, radius * 2, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint2 = new Paint();
         paint2.setColor(ballColor);
@@ -63,7 +60,8 @@ public class Utils {
 
     public static void sortTagsByRssi(List<RuuviTag> tags) {
         Collections.sort(tags, new Comparator<RuuviTag>() {
-            @Override public int compare(RuuviTag o1, RuuviTag o2) {
+            @Override
+            public int compare(RuuviTag o1, RuuviTag o2) {
                 return o2.rssi - o1.rssi;
             }
         });
@@ -89,9 +87,9 @@ public class Utils {
         if (diffInMS > 24 * 60 * 60 * 1000) {
             output += date.toString();
         } else {
-            int seconds = (int) (diffInMS / 1000) % 60 ;
-            int minutes = (int) ((diffInMS / (1000*60)) % 60);
-            int hours   = (int) ((diffInMS / (1000*60*60)) % 24);
+            int seconds = (int) (diffInMS / 1000) % 60;
+            int minutes = (int) ((diffInMS / (1000 * 60)) % 60);
+            int hours = (int) ((diffInMS / (1000 * 60 * 60)) % 24);
             if (hours > 0) output += hours + " h ";
             if (minutes > 0) output += minutes + " min ";
             output += seconds + " s ago";

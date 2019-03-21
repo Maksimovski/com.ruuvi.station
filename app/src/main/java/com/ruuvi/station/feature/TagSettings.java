@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
@@ -18,7 +19,6 @@ import android.support.media.ExifInterface;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
@@ -39,7 +39,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,7 +91,7 @@ public class TagSettings extends AppCompatActivity {
 
         tempUnit = RuuviTag.getTemperatureUnit(this);
 
-        ((TextView)findViewById(R.id.input_mac)).setText(tag.id);
+        ((TextView) findViewById(R.id.input_mac)).setText(tag.id);
         findViewById(R.id.input_mac).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -131,7 +130,8 @@ public class TagSettings extends AppCompatActivity {
         nameTextView.setText(tag.getDispayName());
 
         final TextView gatewayTextView = findViewById(R.id.input_gatewayUrl);
-        if (tag.gatewayUrl != null && !tag.gatewayUrl.isEmpty()) gatewayTextView.setText(tag.gatewayUrl);
+        if (tag.gatewayUrl != null && !tag.gatewayUrl.isEmpty())
+            gatewayTextView.setText(tag.gatewayUrl);
 
         // TODO: 25/10/17 make this less ugly
         nameTextView.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +143,7 @@ public class TagSettings extends AppCompatActivity {
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 input.setText(tag.name);
                 FrameLayout container = new FrameLayout(getApplicationContext());
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 input.setLayoutParams(params);
@@ -178,7 +178,7 @@ public class TagSettings extends AppCompatActivity {
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setText(tag.gatewayUrl);
                 FrameLayout container = new FrameLayout(getApplicationContext());
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 input.setLayoutParams(params);
@@ -214,10 +214,10 @@ public class TagSettings extends AppCompatActivity {
         alarmItems.add(new AlarmItem(getString(R.string.temperature), Alarm.TEMPERATURE, false, -40, 85));
         alarmItems.add(new AlarmItem(getString(R.string.humidity), Alarm.HUMIDITY, false, 0, 100));
         alarmItems.add(new AlarmItem(getString(R.string.pressure), Alarm.PERSSURE, false, 300, 1100));
-        alarmItems.add(new AlarmItem(getString(R.string.rssi), Alarm.RSSI, false, -105 ,0));
-        alarmItems.add(new AlarmItem(getString(R.string.movement), Alarm.MOVEMENT, false, 0 ,0));
+        alarmItems.add(new AlarmItem(getString(R.string.rssi), Alarm.RSSI, false, -105, 0));
+        alarmItems.add(new AlarmItem(getString(R.string.movement), Alarm.MOVEMENT, false, 0, 0));
 
-        for (Alarm alarm: tagAlarms) {
+        for (Alarm alarm : tagAlarms) {
             AlarmItem item = alarmItems.get(alarm.type);
             item.high = alarm.high;
             item.low = alarm.low;
@@ -270,7 +270,7 @@ public class TagSettings extends AppCompatActivity {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             somethinghaschanged = true;
-            AlarmItem ai = alarmItems.get((int)buttonView.getTag());
+            AlarmItem ai = alarmItems.get((int) buttonView.getTag());
             ai.checked = isChecked;
             ai.updateView();
         }
@@ -338,8 +338,8 @@ public class TagSettings extends AppCompatActivity {
                 } else {
                     if (type == Alarm.TEMPERATURE && tempUnit.equals("F")) {
                         this.subtitle = String.format(getString(R.string.alert_subtitle_on),
-                                (int)Utils.celciusToFahrenheit(this.low),
-                                (int)Utils.celciusToFahrenheit(this.high));
+                                (int) Utils.celciusToFahrenheit(this.low),
+                                (int) Utils.celciusToFahrenheit(this.high));
                     } else {
                         this.subtitle = String.format(getString(R.string.alert_subtitle_on), this.low, this.high);
                     }
@@ -353,15 +353,15 @@ public class TagSettings extends AppCompatActivity {
             seekBar.setLeftThumbHighlightColor(getResources().getColor(setSeekbarColor));
             seekBar.setBarHighlightColor(getResources().getColor(setSeekbarColor));
             seekBar.setEnabled(this.checked);
-            ((CheckBox)this.view.findViewById(R.id.alert_checkbox)).setChecked(this.checked);
-            ((TextView)this.view.findViewById(R.id.alert_title)).setText(this.name);
-            ((TextView)this.view.findViewById(R.id.alert_subtitle)).setText(this.subtitle);
+            ((CheckBox) this.view.findViewById(R.id.alert_checkbox)).setChecked(this.checked);
+            ((TextView) this.view.findViewById(R.id.alert_title)).setText(this.name);
+            ((TextView) this.view.findViewById(R.id.alert_subtitle)).setText(this.subtitle);
             if (type == Alarm.TEMPERATURE && tempUnit.equals("F")) {
-                ((TextView)this.view.findViewById(R.id.alert_min_value)).setText((int)Utils.celciusToFahrenheit(this.low) + "");
-                ((TextView)this.view.findViewById(R.id.alert_max_value)).setText((int)Utils.celciusToFahrenheit(this.high) + "");
+                ((TextView) this.view.findViewById(R.id.alert_min_value)).setText((int) Utils.celciusToFahrenheit(this.low) + "");
+                ((TextView) this.view.findViewById(R.id.alert_max_value)).setText((int) Utils.celciusToFahrenheit(this.high) + "");
             } else {
-                ((TextView)this.view.findViewById(R.id.alert_min_value)).setText(this.low + "");
-                ((TextView)this.view.findViewById(R.id.alert_max_value)).setText(this.high + "");
+                ((TextView) this.view.findViewById(R.id.alert_min_value)).setText(this.low + "");
+                ((TextView) this.view.findViewById(R.id.alert_max_value)).setText(this.high + "");
             }
         }
     }
@@ -376,7 +376,7 @@ public class TagSettings extends AppCompatActivity {
         super.onPause();
         tag.favorite = true;
         tag.update();
-        for (AlarmItem alarmItem: alarmItems) {
+        for (AlarmItem alarmItem : alarmItems) {
             if (alarmItem.checked) {
                 if (alarmItem.alarm == null) {
                     alarmItem.alarm = new Alarm(alarmItem.low, alarmItem.high, alarmItem.type, tag.id);
@@ -565,7 +565,7 @@ public class TagSettings extends AppCompatActivity {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
-    public int getCameraPhotoOrientation(Uri file){
+    public int getCameraPhotoOrientation(Uri file) {
         int rotate = 0;
         try (InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(file)) {
             ExifInterface exif = new ExifInterface(inputStream);
@@ -597,10 +597,10 @@ public class TagSettings extends AppCompatActivity {
             Bitmap b = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
             b = rotate(b, rotation);
             Bitmap out;
-            if ((int)(((float)targetHeight / (float)b.getHeight()) * b.getWidth()) > targetWidth) {
-                out = Bitmap.createScaledBitmap(b,  (int)(((float)targetHeight / (float)b.getHeight()) * b.getWidth()), targetHeight, false);
+            if ((int) (((float) targetHeight / (float) b.getHeight()) * b.getWidth()) > targetWidth) {
+                out = Bitmap.createScaledBitmap(b, (int) (((float) targetHeight / (float) b.getHeight()) * b.getWidth()), targetHeight, false);
             } else {
-                out = Bitmap.createScaledBitmap(b, targetWidth, (int)(((float)targetWidth / (float)b.getWidth()) * b.getHeight()), false);
+                out = Bitmap.createScaledBitmap(b, targetWidth, (int) (((float) targetWidth / (float) b.getWidth()) * b.getHeight()), false);
             }
             int x = (out.getWidth() / 2) - (targetWidth / 2);
             if (x < 0) x = 0;

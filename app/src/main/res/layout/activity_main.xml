@@ -12,8 +12,7 @@
         android:fitsSystemWindows="true"
         android:background="@drawable/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -45,10 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white" >
+        android:background="@android:color/white">
 
-        <include
-            layout="@layout/navigation_drawer" />
+        <include layout="@layout/navigation_drawer" />
 
     </android.support.design.widget.NavigationView>
 

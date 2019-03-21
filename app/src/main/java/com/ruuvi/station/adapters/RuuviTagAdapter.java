@@ -1,28 +1,20 @@
 package com.ruuvi.station.adapters;
 
-import android.animation.IntEvaluator;
-import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ruuvi.station.R;
-import com.ruuvi.station.model.Alarm;
 import com.ruuvi.station.model.RuuviTag;
 import com.ruuvi.station.util.AlarmChecker;
 import com.ruuvi.station.util.Utils;
@@ -62,8 +54,8 @@ public class RuuviTagAdapter extends ArrayAdapter<RuuviTag> {
 
         int ballColorRes = (position % 2 == 0) ? R.color.main : R.color.mainLight;
 
-        ((ImageView)convertView.findViewById(R.id.row_main_letter))
-                .setImageBitmap(Utils.createBall((int)getContext().getResources().getDimension(R.dimen.letter_ball_radius),
+        ((ImageView) convertView.findViewById(R.id.row_main_letter))
+                .setImageBitmap(Utils.createBall((int) getContext().getResources().getDimension(R.dimen.letter_ball_radius),
                         getContext().getResources().getColor(ballColorRes),
                         Color.WHITE,
                         txtId.getText().charAt(0) + ""));

@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@null"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
