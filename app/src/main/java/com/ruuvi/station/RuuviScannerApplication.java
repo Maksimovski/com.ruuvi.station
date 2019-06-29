@@ -1,11 +1,14 @@
 package com.ruuvi.station;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.ruuvi.station.di.AppInjector;
+import com.ruuvi.station.mqtt.alarm.RuuviAlarmManager;
 import com.ruuvi.station.service.AltBeaconScannerForegroundService;
 import com.ruuvi.station.service.RuuviRangeNotifier;
 import com.ruuvi.station.util.BackgroundScanModes;
@@ -21,11 +24,17 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.bluetooth.BluetoothMedic;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasServiceInjector;
+
 /**
  * Created by io53 on 10/09/17.
  */
 
-public class RuuviScannerApplication extends Application implements BeaconConsumer {
+public class RuuviScannerApplication extends Application implements BeaconConsumer, HasServiceInjector {
     private static final String TAG = "RuuviScannerApplication";
     private BeaconManager beaconManager;
     private Region region;
@@ -35,6 +44,11 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
     private boolean foreground = false;
     BluetoothMedic medic;
     RuuviScannerApplication me;
+
+    @Inject
+    public DispatchingAndroidInjector<Service> serviceDispatchingAndroidInjector;
+    @Inject
+    public RuuviAlarmManager alarmManager;
 
     public void stopScanning() {
         Log.d(TAG, "Stopping scanning");
@@ -133,8 +147,14 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
     }
 
     @Override
+    public AndroidInjector<Service> serviceInjector() {
+        return serviceDispatchingAndroidInjector;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+        AppInjector.init(this);
         me = this;
         Log.d(TAG, "App class onCreate");
         FlowManager.init(getApplicationContext());

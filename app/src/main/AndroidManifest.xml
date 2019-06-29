@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+
         <activity
             android:name=".feature.main.MainActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenLayout|screenSize"
@@ -44,7 +45,6 @@
         <service
             android:name=".service.AltBeaconScannerForegroundService"
             android:exported="false" />
-
         <service
             android:name=".service.ScannerJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -57,8 +57,8 @@
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
             android:name=".feature.WelcomeActivity"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
 
         <meta-data
@@ -82,8 +82,8 @@
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
             android:name=".feature.StartupActivity"
-            android:theme="@style/SplashTheme"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -112,6 +112,10 @@
                 android:value="true" />
         </service>
 
+        <service
+            android:name=".mqtt.MqttGatewayService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <receiver android:name=".receivers.CancelAlarmReceiver" />
     </application>
