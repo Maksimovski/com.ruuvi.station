@@ -33,7 +33,7 @@ public class AddTagAdapter extends ArrayAdapter<RuuviTag> {
         final RuuviTag tag = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item_add, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_add_tag, parent, false);
         }
 
         ((TextView) convertView.findViewById(R.id.address)).setText(tag.id);

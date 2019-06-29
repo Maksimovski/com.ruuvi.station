@@ -73,7 +73,7 @@
             android:name=".feature.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity
-            android:name=".feature.AddTagActivity"
+            android:name=".feature.addtag.AddTagActivity"
             android:label="@string/title_activity_add_tag"
             android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
         <activity

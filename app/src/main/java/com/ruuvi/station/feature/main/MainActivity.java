@@ -36,7 +36,7 @@ import android.widget.Toast;
 import com.ruuvi.station.R;
 import com.ruuvi.station.RuuviScannerApplication;
 import com.ruuvi.station.feature.AboutActivity;
-import com.ruuvi.station.feature.AddTagActivity;
+import com.ruuvi.station.feature.addtag.AddTagActivity;
 import com.ruuvi.station.feature.AppSettingsActivity;
 import com.ruuvi.station.feature.WelcomeActivity;
 import com.ruuvi.station.model.RuuviTag;

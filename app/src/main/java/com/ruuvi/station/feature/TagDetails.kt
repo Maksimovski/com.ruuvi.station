@@ -32,6 +32,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import com.ruuvi.station.R
+import com.ruuvi.station.feature.addtag.AddTagActivity
 import com.ruuvi.station.model.RuuviTag
 import com.ruuvi.station.util.*
 import kotlinx.android.synthetic.main.activity_tag_details.*
