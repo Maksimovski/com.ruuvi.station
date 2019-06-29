@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.MqttSettingsFragment"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_gateway_title"
+        style="@style/PrefTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MQTT broker url"/>
+
+    <EditText
+        android:id="@+id/et_mqtt_broker_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/message_mqtt_broker_url_hint" />
+
+    <EditText
+        android:id="@+id/et_mqtt_broker_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/message_mqtt_broker_username_hint" />
+
+    <EditText
+        android:id="@+id/et_mqtt_broker_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/message_mqtt_broker_password_hint" />
+
+    <LinearLayout
+        android:id="@+id/gateway_tester_layout"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/tv_gateway_test_result"
+            style="@style/PrefTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_gateway_test"
+            android:text="@string/message_verify_and_save_mqtt_broker_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
+
+    <TextView
+        android:id="@+id/settings_info"
+        android:text="@string/settings_gateway_details"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

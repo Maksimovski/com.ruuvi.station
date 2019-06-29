@@ -33,7 +33,10 @@ class AppSettingsActivity : AppCompatActivity() {
             if (res == R.string.title_activity_app_settings) {
                 transaction.setCustomAnimations(R.anim.enter_left, R.anim.exit_right)
             }
-        } else {
+        } else if (res == R.string.title_mqtt_broker_settings) {
+            transaction.setCustomAnimations(R.anim.enter_right, R.anim.exit_left)
+            fragment = MqttSettingsFragment.newInstance()
+        }else {
             transaction.setCustomAnimations(R.anim.enter_right, R.anim.exit_left)
             fragment = AppSettingsDetailFragment.newInstance(res)
         }

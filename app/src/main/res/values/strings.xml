@@ -286,4 +286,26 @@
     <string name="lazy_background_scanning_enabled">Lazy background scanning mode is enabled.</string>
     <string name="no_background_scanning_enabled">No background scanning mode is enabled.</string>
     <string name="more_info">More info</string>
+
+    <string name="message_verify_and_save_mqtt_broker_url">Verify &amp; Save</string>
+    <string name="message_verify_broker_progress">Verifying broker…</string>
+    <string name="message_mqtt_broker_url_hint">MQTT broker URL</string>
+    <string name="message_mqtt_broker_username_hint">Username (optional)</string>
+    <string name="message_mqtt_broker_password_hint">Password (optional)</string>
+    <string name="message_add_tag_hint">Tag address</string>
+    <string name="message_subscribe_tag_progress">Please wait…</string>
+
+    <string name="error_message_invalid_tag_address">Invalid Tag address</string>
+    <string name="error_message_add_tag">Invalid Tag address</string>
+
+    <string name="title_mqtt_broker_settings">MQTT Broker Settings</string>
+    <string name="title_choose_gateway_dialog">Select gateway type</string>
+    <string name="title_add_tag">Add tag</string>
+    <string name="add_tag_dialog_action_subscribe">Subscribe</string>
+    <string name="add_tag_dialog_action_cancel">Cancel</string>
+
+    <string-array name="gateway_type">
+        <item>HTTP Gateway</item>
+        <item>MQTT Gateway</item>
+    </string-array>
 </resources>

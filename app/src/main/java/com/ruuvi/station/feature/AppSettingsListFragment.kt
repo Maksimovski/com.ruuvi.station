@@ -1,5 +1,6 @@
 package com.ruuvi.station.feature
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.SwitchCompat
@@ -33,7 +34,7 @@ class AppSettingsListFragment : Fragment() {
         }
 
         gateway_url.setOnClickListener {
-            (activity as AppSettingsActivity).openFragment(R.string.gateway_url)
+            showChooseGatewayTypeDialog()
         }
 
         temperature_unit.setOnClickListener {
@@ -91,5 +92,27 @@ class AppSettingsListFragment : Fragment() {
             BackgroundScanModes.FOREGROUND -> bg_scan_description.text = getString(R.string.continuous_background_scanning_enabled)
             else -> bg_scan_description.text = getString(R.string.no_background_scanning_enabled)
         }
+    }
+
+    private fun showChooseGatewayTypeDialog() {
+        AlertDialog.Builder(context).apply {
+            setTitle(R.string.title_choose_gateway_dialog)
+            setItems(R.array.gateway_type) { dialog, position ->
+                when (position) {
+                    0 -> {
+                        dialog.dismiss()
+                        (activity as AppSettingsActivity).openFragment(R.string.gateway_url)
+
+                    }
+                    1 -> {
+                        dialog.dismiss()
+                        (activity as AppSettingsActivity).openFragment(R.string.title_mqtt_broker_settings)
+                    }
+                }
+            }
+            setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+        }.create().show()
     }
 }
