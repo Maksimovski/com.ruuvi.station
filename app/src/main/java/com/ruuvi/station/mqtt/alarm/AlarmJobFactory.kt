@@ -13,7 +13,6 @@ object AlarmJobFactory {
     }
 
     fun createMqttPublishAlarmJob(repeatAfterSeconds: Int): MqttPublishAlarmJob {
-        val triggerAt = LocalDateTime.now().plusSeconds(20).toDateTime()
-        return MqttPublishAlarmJob(MQTT_PUBLISH_JOB_ID, triggerAt, repeatAfterSeconds)
+        return MqttPublishAlarmJob(MQTT_PUBLISH_JOB_ID, LocalDateTime.now().toDateTime(), repeatAfterSeconds)
     }
 }

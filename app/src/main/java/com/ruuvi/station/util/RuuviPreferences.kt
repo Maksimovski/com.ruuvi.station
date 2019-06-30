@@ -99,9 +99,9 @@ class RuuviPreferences(val context: Context) {
             pref.edit().putString(KEY_MQTT_BROKER_USERNAME, value).apply()
         }
 
-    var mqttBrokerPassword: String
-        get() = pref.getString(KEY_MQTT_BROKER_PASSWORD, "")!!
+    var mqttBrokerPassword: CharArray
+        get() = pref.getString(KEY_MQTT_BROKER_PASSWORD, "")!!.toCharArray()
         set(value) {
-            pref.edit().putString(KEY_MQTT_BROKER_PASSWORD, value).apply()
+            pref.edit().putString(KEY_MQTT_BROKER_PASSWORD, String(value)).apply()
         }
 }

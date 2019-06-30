@@ -6,16 +6,21 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
+import com.ruuvi.station.model.RuuviTag
 import com.ruuvi.station.mqtt.alarm.utils.AndroidUtil
 import com.ruuvi.station.mqtt.alarm.utils.NotificationFactory
 import com.ruuvi.station.util.RuuviPreferences
 import dagger.android.AndroidInjection
+import org.eclipse.paho.client.mqttv3.IMqttActionListener
+import org.eclipse.paho.client.mqttv3.IMqttToken
 import javax.inject.Inject
 
 class MqttGatewayService : Service() {
 
     @Inject
     lateinit var ruuviPreferences: RuuviPreferences
+    @Inject
+    lateinit var mqttManager: MqttManager
 
     override fun onCreate() {
         super.onCreate()
@@ -46,11 +51,31 @@ class MqttGatewayService : Service() {
     }
 
     private fun processCommand(intent: Intent) {
-        Toast.makeText(ruuviPreferences.context, "Service running", Toast.LENGTH_SHORT).show()
-        Log.i(TAG, "Start processing command")
+        Toast.makeText(ruuviPreferences.context, "Publishing tags", Toast.LENGTH_SHORT).show()
+        mqttManager.connectMqttBroker(object : IMqttActionListener {
+            override fun onSuccess(asyncActionToken: IMqttToken?) {
+                Log.i(MqttManager.TAG, "Connection success")
+                RuuviTag.getAll(false).forEach { tag ->
+                    mqttManager.publish(tag)
+                }
+                mqttManager.disconnectMqttBroker(object : IMqttActionListener {
+                    override fun onSuccess(asyncActionToken: IMqttToken?) {
+                        Log.i(MqttManager.TAG, "Disconnect success")
+                        commandStopService()
+                    }
 
-        Log.i(TAG, "Stop processing command")
-        commandStopService()
+                    override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                        Log.i(MqttManager.TAG, "Disconnect failure: $exception")
+                        commandStopService()
+                    }
+                })
+            }
+
+            override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
+                Log.i(MqttManager.TAG, "Connection failure: $exception")
+                commandStopService()
+            }
+        })
     }
 
     private fun commandStopService() {
