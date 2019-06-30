@@ -77,6 +77,7 @@ public class RuuviRangeNotifier implements RangeNotifier {
             }
             RuuviTag tag = LeScanResult.fromAltbeacon(beacon);
             if (tag != null) {
+                tag.isRemoteTag = 0;
                 saveReading(tag);
                 if (tag.favorite) tags.add(tag);
             }

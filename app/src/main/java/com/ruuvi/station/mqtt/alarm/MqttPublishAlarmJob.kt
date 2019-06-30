@@ -1,10 +1,8 @@
 package com.ruuvi.station.mqtt.alarm
 
-import android.app.ActivityManager
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
 import com.ruuvi.station.mqtt.MqttGatewayService
 import org.joda.time.DateTime
 import org.joda.time.DateTimeUtils
@@ -22,21 +20,7 @@ class MqttPublishAlarmJob(val id: Int,
     )
 
     fun execute(context: Context) {
-        if (!isServiceRunning(MqttGatewayService::class.java, context)) {
-            MqttGatewayService.startService(context)
-        }
-    }
-
-    private fun isServiceRunning(serviceClass: Class<*>, context: Context): Boolean {
-        val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                Log.i(RuuviAlarmManager.TAG, "Service already running")
-                return true
-            }
-        }
-        Log.i(RuuviAlarmManager.TAG, "Service not running")
-        return false
+        MqttGatewayService.startService(context)
     }
 
     fun nextAlarm(): DateTime {
@@ -46,7 +30,7 @@ class MqttPublishAlarmJob(val id: Int,
             nextTriggerDate = nextTriggerDate.withDate(LocalDate.now())
         }
         while (nextTriggerDate.isBefore(DateTimeUtils.currentTimeMillis())) {
-            nextTriggerDate = nextTriggerDate.plusSeconds(repeatAfterSeconds)
+            nextTriggerDate = nextTriggerDate.withDate(LocalDate.now()).plusSeconds(repeatAfterSeconds)
         }
 
         return nextTriggerDate

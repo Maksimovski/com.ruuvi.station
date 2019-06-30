@@ -5,6 +5,7 @@ import com.ruuvi.station.mqtt.MqttManager
 import com.ruuvi.station.util.RuuviPreferences
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module(
         includes = [
@@ -19,6 +20,7 @@ class AppModule {
         return RuuviPreferences(context)
     }
 
+    @Singleton
     @Provides
     fun provideMqttManager(context: Context, ruuviPreferences: RuuviPreferences): MqttManager {
         return MqttManager(context, ruuviPreferences)

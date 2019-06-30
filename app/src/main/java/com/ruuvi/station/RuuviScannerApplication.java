@@ -1,5 +1,6 @@
 package com.ruuvi.station;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
 import android.content.Context;
@@ -28,13 +29,14 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import dagger.android.HasServiceInjector;
 
 /**
  * Created by io53 on 10/09/17.
  */
 
-public class RuuviScannerApplication extends Application implements BeaconConsumer, HasServiceInjector {
+public class RuuviScannerApplication extends Application implements BeaconConsumer, HasServiceInjector, HasActivityInjector {
     private static final String TAG = "RuuviScannerApplication";
     private BeaconManager beaconManager;
     private Region region;
@@ -47,6 +49,8 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
 
     @Inject
     public DispatchingAndroidInjector<Service> serviceDispatchingAndroidInjector;
+    @Inject
+    public DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
     @Inject
     public RuuviAlarmManager alarmManager;
 
@@ -149,6 +153,11 @@ public class RuuviScannerApplication extends Application implements BeaconConsum
     @Override
     public AndroidInjector<Service> serviceInjector() {
         return serviceDispatchingAndroidInjector;
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
 
     @Override

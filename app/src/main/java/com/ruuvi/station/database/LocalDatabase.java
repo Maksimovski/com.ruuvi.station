@@ -15,7 +15,19 @@ import com.ruuvi.station.model.TagSensorReading;
 @Database(name = LocalDatabase.NAME, version = LocalDatabase.VERSION)
 public class LocalDatabase {
     public static final String NAME = "LocalDatabase";
-    public static final int VERSION = 6;
+    public static final int VERSION = 7;
+
+    @Migration(version = 7, database = LocalDatabase.class)
+    public static class Migration7 extends AlterTableMigration<RuuviTag> {
+        public Migration7(Class<RuuviTag> table) {
+            super(table);
+        }
+
+        @Override
+        public void onPreMigrate() {
+            addColumn(SQLiteType.INTEGER, "isRemoteTag");
+        }
+    }
 
     @Migration(version = 6, database = LocalDatabase.class)
     public static class Migration6 extends AlterTableMigration<Alarm> {

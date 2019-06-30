@@ -19,8 +19,8 @@ class AlarmsModule {
 
     @Provides
     @Singleton
-    fun provideAlarmReceiver(alarmScheduler: AlarmScheduler): AlarmReceiver {
-        return AlarmReceiver(alarmScheduler)
+    fun provideAlarmReceiver(): AlarmReceiver {
+        return AlarmReceiver()
     }
 
     @Provides

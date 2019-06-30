@@ -3,11 +3,14 @@ package com.ruuvi.station.feature.addtag
 import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
@@ -21,8 +24,11 @@ import android.view.View
 import android.widget.Toast
 import com.ruuvi.station.R
 import com.ruuvi.station.databinding.ActivityAddTagBinding
+import com.ruuvi.station.di.Injectable
 import com.ruuvi.station.feature.TagSettings
 import com.ruuvi.station.model.RuuviTag
+import com.ruuvi.station.model.TagSensorReading
+import com.ruuvi.station.mqtt.MqttManager
 import com.ruuvi.station.service.ScannerService
 import com.ruuvi.station.util.Starter
 import io.reactivex.Observable
@@ -32,12 +38,16 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
+class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener, Injectable {
     lateinit var starter: Starter
 
     private lateinit var binder: ActivityAddTagBinding
     private val disposable = CompositeDisposable()
+
+    @Inject
+    lateinit var mqttManager: MqttManager
 
     companion object {
         const val TAG = "AddTagActivity"
@@ -58,6 +68,8 @@ class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         )
         starter = Starter(this)
         starter.getThingsStarted()
+
+        requestIgnoringBatteryOptimizations()
     }
 
     override fun onResume() {
@@ -148,7 +160,7 @@ class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         })
     }
 
-    private fun discoverTagObservable() = Observable.interval(0, 4, TimeUnit.SECONDS)
+    private fun discoverTagObservable() = Observable.interval(0, 2, TimeUnit.SECONDS)
 
     private fun observeDatabase(): DisposableObserver<Long> {
         return object : DisposableObserver<Long>() {
@@ -161,10 +173,12 @@ class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 calendar.add(Calendar.SECOND, -5)
                 Log.i(TAG, "Observable interval $t")
                 (binder.rvTagList.adapter as AddTagAdapter).addTagList(
-                        RuuviTag.getAll(false)
+                        RuuviTag.getAll(true).filter {
+                            it.isRemoteTag()
+                        }.plus(RuuviTag.getAll(false)
                                 .filter {
                                     it.updateAt.time > calendar.time.time
-                                }
+                                })
                                 .sortedWith(kotlin.Comparator { o1, o2 -> o2.rssi - o1.rssi })
                                 .also {
                                     if (it.isEmpty()) {
@@ -187,6 +201,34 @@ class AddTagActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun showAddTagDialog() {
-       // TODO show add tag dialog
+        if (mqttManager.isConnected()) {
+            AddTagDialog.create(this, mqttManager, R.string.title_add_tag,
+                    onSubscribeSuccess = { dialog, remoteTag ->
+                        remoteTag.isRemoteTag = 1
+                        remoteTag.favorite = true
+                        remoteTag.save()
+                        val remoteTagSensorReading = TagSensorReading(remoteTag)
+                        remoteTagSensorReading.save()
+                        dialog.dismiss()
+                    }, onSubscribeFailure = {
+
+            }).show()
+        }
+    }
+
+    private fun requestIgnoringBatteryOptimizations() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            (applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                if (!this.isIgnoringBatteryOptimizations(packageName)) {
+                    val intent = Intent()
+                    if (!this.isIgnoringBatteryOptimizations(packageName)) {
+                        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                        intent.data = Uri.parse("package:$packageName")
+                        startActivity(intent)
+                    }
+                }
+            }
+
+        }
     }
 }

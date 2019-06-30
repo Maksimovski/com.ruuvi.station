@@ -296,6 +296,7 @@
     <string name="message_subscribe_tag_progress">Please wait…</string>
 
     <string name="error_message_invalid_tag_address">Invalid Tag address</string>
+    <string name="error_message_subscribe_tag">Unable to subscribe.</string>
     <string name="error_message_add_tag">Invalid Tag address</string>
 
     <string name="title_mqtt_broker_settings">MQTT Broker Settings</string>

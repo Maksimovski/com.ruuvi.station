@@ -2,6 +2,7 @@ package com.ruuvi.station.di.component
 
 import android.app.Application
 import com.ruuvi.station.RuuviScannerApplication
+import com.ruuvi.station.di.module.ActivityBuilder
 import com.ruuvi.station.di.module.AppModule
 import com.ruuvi.station.di.module.ServiceBuilder
 import dagger.BindsInstance
@@ -14,7 +15,8 @@ import javax.inject.Singleton
         modules = [
             AndroidInjectionModule::class,
             AppModule::class,
-            ServiceBuilder::class
+            ServiceBuilder::class,
+            ActivityBuilder::class
         ]
 )
 interface AppComponent {

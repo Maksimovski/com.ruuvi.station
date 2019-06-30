@@ -24,9 +24,8 @@ class RuuviAlarmManager @Inject constructor(
     }
 
     private fun scheduleMqttPublishAlarmJob() {
-        val repeatEverySeconds = 20
         val mqttPublishAlarmJob: MqttPublishAlarmJob =
-                alarmJobFactory.createMqttPublishAlarmJob(repeatEverySeconds)
+                alarmJobFactory.createMqttPublishAlarmJob(REPEAT_AFTER_SECONDS)
         alarmScheduler.schedule(mqttPublishAlarmJob)
     }
 
@@ -34,5 +33,6 @@ class RuuviAlarmManager @Inject constructor(
         const val TAG = "Alarm"
         const val ACTION_ALARM = "com.ruuvi.intent.action.ALARM"
         const val EXTRA_KEY_ALARM = "alarm"
+        const val REPEAT_AFTER_SECONDS = 1020 //17min
     }
 }

@@ -121,6 +121,22 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
         <receiver android:name=".receivers.CancelAlarmReceiver" />
+
+        <receiver
+            android:name=".mqtt.alarm.AlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.ruuvi.intent.action.ALARM"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".mqtt.alarm.AlarmExecutor"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.ruuvi.intent.action.ALARM"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

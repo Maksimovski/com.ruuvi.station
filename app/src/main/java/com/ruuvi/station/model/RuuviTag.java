@@ -68,6 +68,8 @@ public class RuuviTag extends BaseModel {
     public int movementCounter;
     @Column
     public int measurementSequenceNumber;
+    @Column
+    public int isRemoteTag = 0;
 
     public RuuviTag() {
     }
@@ -127,5 +129,13 @@ public class RuuviTag extends BaseModel {
                 .execute();
 
         this.delete();
+    }
+
+    public boolean isNearbyTag() {
+        return isRemoteTag == 0;
+    }
+
+    public boolean isRemoteTag() {
+        return isRemoteTag == 1;
     }
 }
